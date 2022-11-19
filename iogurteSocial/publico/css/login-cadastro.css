@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+    /* font-family: 'Courier New', Courier, monospace; */
+}
+
+:root {
+    --default-color: #306FAD;
+}
+
+::selection {
+    background-color: var(--default-color);
+    color: white;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--default-color);
+    padding: 40px 30px;
+}
+
+
+.container-login {
+    max-width: 850px;
+    background: #fff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    align-items: center;
+    justify-content: space-around;
+    padding: 40px 30px;
+}
+
+.container-login .formulario-login .titulo {
+    position: relative;
+    font-size: 24px;
+    font-weight: 500;
+    color: #333;
+}
+
+.container-login .formulario-login .titulo::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 25px;
+    background-color: var(--default-color);
+}
+
+.container-login .formulario-login .input-login {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    margin: 10px 0;
+    position: relative;
+}
+
+.container-login .formulario-login .input-login input {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 0 30px;
+    font-size: 16px;
+    font-weight: 500;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.container-login .formulario-login .input-login input:focus,
+.container-login .formulario-login .input-login input:valid {
+    border-color: var(--default-color);
+}
+
+.botaoEntrar {
+    /* background-color: var(--default-color); */
+    border: 0;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 150px;
+}
+
+.container-login .formulario-login .input-login input[type="submit"] {
+    background-color: var(--default-color);
+    border: 0;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;   
+}
+
+.container-login .formulario-login .input-login i {
+    position: absolute;
+    color: var(--default-color);
+    font-size: 17px;
+}
+
+.container-login .formulario-login .divider {
+    text-align: center;
+    margin: 10px;
+    font-size: 18px;
+}
+
+.container-login .formulario-login .sigup a {
+    color: var(--default-color);
+    text-decoration: none;
+}
+
+.sigup {
+    align-items: center;
+    margin-left: 107px;
+}
+
+.sigin {
+    text-decoration: none;
+    text-align: center;
+}
+
+.sigin a{
+    text-decoration: none;
+    color: var(--default-color);
+}
+
+.container-login .logo-img {
+    width: 50%;
+}
+
+img {
+    width: 270px;
+}
+
+

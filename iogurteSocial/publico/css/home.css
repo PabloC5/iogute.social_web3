@@ -1,0 +1,167 @@
+a {
+  color: #fff;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+opacity: 0.7;
+}
+
+.logo {
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+a > img {
+width: 150px;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif;
+  background: #306FAD;
+  height: 8vh;
+}
+
+/* main {
+  background: url("bg.jpg") no-repeat center center;
+  background-size: cover;
+  height: 92vh;
+} */
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  margin-top: 15px;
+}
+
+.nav-list li {
+  letter-spacing: 3px;
+  margin-left: 32px;
+}
+
+.mobile-menu {
+  display: none;
+  cursor: pointer;
+}
+
+.mobile-menu div {
+  width: 32px;
+  height: 2px;
+  background: #fff;
+  margin: 8px;
+  transition: 0.3s;
+}
+
+@media (max-width: 999px) {
+  body {
+      overflow-x: hidden;
+  }
+  .nav-list {
+      position: absolute;
+      top: 8vh;
+      right: 0;
+      width: 40vw;
+      height: 100%;
+      background: #306FAD;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-around;
+      transform: translateX(100%);
+      transition: transform 0.3s ease-in;
+      margin-top: 0px;
+  }
+  
+  .nav-list li {
+      margin-left: 0;
+      opacity: 0;
+  }
+  .mobile-menu {
+      display: block;
+  }
+
+  .formPesquisa {
+      width: 150px;
+      border-radius: 5px;
+  }
+  .card {
+      z-index: -1;
+  }
+  /* nav {
+      z-index: 100;
+  } */
+}
+
+.nav-list.active {
+  transform: translateX(0);
+}
+
+@keyframes navLinkFade {
+  from {
+      opacity: 0;
+      transform: translateX(50px);
+  }
+  to {
+      opacity: 1;
+      transform: translateX(0);
+  }
+}
+
+.mobile-menu.active .line1 {
+  transform: rotate(-45deg) translate(-8px, 8px);
+}
+
+.mobile-menu.active .line2 {
+  opacity: 0;
+}
+
+.mobile-menu.active .line3 {
+  transform: rotate(45deg) translate(-5px, -7px);
+}
+
+#botaoPesquisa {
+  height: 28px;
+  margin-bottom: 3px;
+}
+
+footer{
+  height: 200px;
+  background-color: #306FAD;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: #fff;
+}
+
+.testeRoda {
+  width: 100%;
+  text-align: center;
+}
+
+.formPesquisa {
+  margin: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+/* .card {
+
+} */
+
+.upImageBtn {
+  margin-left: 14px;
+  padding-bottom: 4px;
+}
+
+.testeListe {
+  margin: 8px;
+}
+
+.dropDPerfil {
+  margin-top: 9px;
+  color: #fff;
+}
