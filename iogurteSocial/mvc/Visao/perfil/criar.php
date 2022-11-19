@@ -17,7 +17,7 @@
             <ul class="nav-list">
               <li class="testeListe">
                 <!-- <a href="home.html">Home</a> -->
-                <a href="<?= URL_RAIZ . 'home/criar' ?>">Home</a>
+                <a href="<?= URL_RAIZ . 'home' ?>">Home</a>
               </li>
                 <li class="nav-item dropdown">
                   <a class="dropDPerfil nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -84,7 +84,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form action="<?= URL_RAIZ . 'perfil/criar' ?>" method="post" enctype="multipart/form-data">
+              <form action="<?= URL_RAIZ . 'perfil' ?>" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                   <label for="formFile" class="form-label">Escolha uma imagem para postar</label>
                     <input class="form-control" name="file" type="file" id="formFile">
@@ -103,52 +103,38 @@
       </div>
       <!-- modal importar imagem-->
       <div class="container">
-        <div class="row">
-            <div class="col-8 offset-2">
-                <div class="card-deck">
-                    <div class="card mt-3">
-                        <img class="card-img-top" src="img/foto1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                          <hr>
-                          <p>
-                          <button  class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">
-                            <i class="fa fa-trash"></i>
-                            Excluir
-                          </button>
-                        </div>
-                    </div>
-                    <div class="card mt-3">
-                        <img class="card-img-top" src="img/fotoPerfil.jpg" alt="Card image cap">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                          <hr>
-                          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">
-                            <i class="fa fa-trash"></i>
-                            Excluir
-                          </button>
-                        </div>
-                    </div>
-                    <div class="card mt-3 mb-3">
-                        <img class="card-img-top" src="img/foto3.jpg" alt="Card image cap">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                          <hr>
-                          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">
-                            <i class="fa fa-trash"></i>
-                            Excluir
-                          </button>
-                        </div>
-                    </div>
-                </div>
-            </div>  
+      <?php if ($mensagemFlash) : ?>
+        <div class="alert alert-warning alert-dismissible pe-2 fade show bg-dark text-light border-light" role="alert">
+            <strong><?= $mensagemFlash ?></strong>
+            <button type="button" class="bg-transparent border-0 float-end d-inline " data-bs-dismiss="alert" aria-label="Close"><i class="fas fa-times text-light"></i></button>
         </div>
+      <?php endif ?>
+        <!-- começa -->
+          <div class="row">
+              <?php foreach ($arquivos as $arquivo) : ?>
+                <?php if ($arquivo->getUsuarioId() == $usuario) : ?>
+
+                  <div class="col-6 offset-3">
+                      <div class="card-deck">
+                          <div class="card mt-3 mb-3">
+                              <img class="card-img-top " src="<?= $arquivo->getfoto() ?>" alt="Card image cap">
+                              <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+                                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                <hr>
+                                <p>
+                                <button  class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">
+                                  <i class="fa fa-trash"></i>
+                                  Excluir
+                                </button>
+                              </div>
+                          </div>
+                      </div>
+                  </div> 
+                  <?php endif ?>
+                <?php endforeach ?> 
+              </div>
       </div>
     </main>
     <footer class="navbar">

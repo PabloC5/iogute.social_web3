@@ -24,8 +24,9 @@ $rotas = [
     '/usuarios/sucesso' => [
         'GET' => '\Controlador\UsuarioControlador#sucesso',
     ],
-    '/home/criar' => [
-        'GET' => '\Controlador\HomeControlador#criar',
+    '/home' => [
+        'GET' => '\Controlador\HomeControlador#index',
+        'POST' => '\Controlador\HomeControlador#armazenar',
     ],
     '/perfil' => [
         'GET' => '\Controlador\PerfilControlador#index',

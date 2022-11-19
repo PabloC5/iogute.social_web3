@@ -1,33 +1,37 @@
 <?php
 namespace Controlador;
 
-// use \Modelo\Reclamacao;
 use \Modelo\Usuario;
-use \PDO;
 use \Framework\DW3Sessao;
-use \Framework\DW3BancoDeDados;
+use \Modelo\Foto;
 
 class PerfilControlador extends Controlador
 {
-    const INSERIR = 'INSERT INTO fotos(usuario_id, titulo, descricao, data_up, hash_fotos) VALUES (?, ?, ?, ?, ?)';
-    private $id;
     protected $nomeUsuario; 
+    protected $usuarioTeste;
 
-    // public function criar()
-    // {
-    //     $this->verificarLogado();
-    //     $this->nomeUsuario = Usuario::buscarId(DW3Sessao::get('usuario'));
-    //     $this->visao('perfil/criar.php', [
-    //         'usuario' => $this->getUsuario()
-    //     ], 'perfil.php');
-    // }
+    private function calcularPaginacao()
+    {
+        $pagina = array_key_exists('p', $_GET) ? intval($_GET['p']) : 1;
+        $limit = 4;
+        $offset = ($pagina - 1) * $limit;
+        $arquivos = Foto::buscarTodos($limit, $offset);
+        $ultimaPagina = ceil(Foto::contarTodos() / $limit);
+        return compact('pagina', 'arquivos', 'ultimaPagina');
+    }
 
     public function index()
     {
         $this->verificarLogado();
         $this->nomeUsuario = Usuario::buscarId(DW3Sessao::get('usuario'));
+        $this->usuarioTeste = DW3Sessao::get('usuario');
+        $paginacao = $this->calcularPaginacao();
         $this->visao('perfil/criar.php', [
-            'usuario' => $this->getUsuario()
+            'usuario' => $this->getUsuario(),
+            'pagina' => $paginacao['pagina'],
+            'arquivos' => $paginacao['arquivos'],
+            'ultimaPagina' => $paginacao['ultimaPagina'],
+            'mensagemFlash' => DW3Sessao::getFlash('mensagemFlash')
         ], 'perfil.php');
     }
 
@@ -46,7 +50,7 @@ class PerfilControlador extends Controlador
             else {
                 $pathFinal = $pasta . $novoNomeArquivo . "." . $extensao;
                 if (move_uploaded_file($arquivo["tmp_name"], $pathFinal)) {
-                    $arquivo = new Arquivo(
+                    $arquivo = new Foto(
                         DW3Sessao::get('usuario'),
                         "titulo",
                         "descritivo",
@@ -58,20 +62,14 @@ class PerfilControlador extends Controlador
                     if ($arquivo->isValido()) {
                         $arquivo->salvar();
                         DW3Sessao::setFlash('mensagemFlash', 'Foto carregada com sucesso');
-                        // $this->redirecionar(URL_RAIZ . 'arquivos');
+                        $this->redirecionar(URL_RAIZ . 'perfil');
                     } else {
                         echo "errado";
                     }
                     
                 } 
             }
-
-            
-            // $upCorreto = move_uploaded_file($arquivo["tmp_name"], $pasta . $novoNomeArquivo . "." . $extensao);
         }
-        // $this->visao('perfil/criar.php', [
-        //     'usuario' => $this->getUsuario()
-        // ], 'perfil.php');
     }
    
 }

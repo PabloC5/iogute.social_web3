@@ -4,16 +4,33 @@ namespace Controlador;
 // use \Modelo\Reclamacao;
 use \Modelo\Usuario;
 use \Framework\DW3Sessao;
+use \Modelo\Foto;
 
 class HomeControlador extends Controlador
 {
     public function index()
     {
         $this->verificarLogado();
-        // $reclamacoes = Reclamacao::buscarNaoAtendidos();
+        // $this->nomeUsuario = Usuario::buscarId(DW3Sessao::get('usuario'));
+        $paginacao = $this->calcularPaginacao();
+        $this->verificarLogado();
         $this->visao('home/criar.php', [
-            'mensagem' => DW3Sessao::getFlash('mensagem', null)
+            'usuario' => $this->getUsuario(),
+            'pagina' => $paginacao['pagina'],
+            'arquivos' => $paginacao['arquivos'],
+            'ultimaPagina' => $paginacao['ultimaPagina'],
+            'mensagemFlash' => DW3Sessao::getFlash('mensagemFlash')
         ], 'home.php');
+    }
+
+    private function calcularPaginacao()
+    {
+        $pagina = array_key_exists('p', $_GET) ? intval($_GET['p']) : 1;
+        $limit = 4;
+        $offset = ($pagina - 1) * $limit;
+        $arquivos = Foto::buscarTodos($limit, $offset);
+        $ultimaPagina = ceil(Foto::contarTodos() / $limit);
+        return compact('pagina', 'arquivos', 'ultimaPagina');
     }
 
     public function criar()
@@ -24,12 +41,40 @@ class HomeControlador extends Controlador
         ], 'home.php');
     }
 
-    // public function perfil()
-    // {
-    //     $this->verificarLogado();
-    //     $this->visao('perfil/criar.php', [
-    //         'usuario' => $this->getUsuario()
-    //     ], 'perfil.php');
-    //     // $this->visao('perfil/criar.php');
-    // }
+    public function armazenar()
+    {
+        $this->verificarLogado();
+        
+        if (isset($_POST['acao'])) {
+            $arquivo = $_FILES['file'];
+            $pasta = 'publico/img/';
+            $nomeDoarquivo = $arquivo['name'];
+            $novoNomeArquivo = uniqid();
+            $extensao = strtolower(pathinfo($nomeDoarquivo, PATHINFO_EXTENSION));
+            if ($extensao != 'jpg' && $extensao != 'png') 
+                echo "Tipo de arquivo incorreto";
+            else {
+                $pathFinal = $pasta . $novoNomeArquivo . "." . $extensao;
+                if (move_uploaded_file($arquivo["tmp_name"], $pathFinal)) {
+                    $arquivo = new Foto(
+                        DW3Sessao::get('usuario'),
+                        "titulo",
+                        "descritivo",
+                        date("Y-m-d H:i:s"),
+                        $pathFinal,
+                        null,
+                        null
+                    );
+                    if ($arquivo->isValido()) {
+                        $arquivo->salvar();
+                        DW3Sessao::setFlash('mensagemFlash', 'Foto carregada com sucesso');
+                        $this->redirecionar(URL_RAIZ . 'perfil');
+                    } else {
+                        echo "errado";
+                    }
+                    
+                } 
+            }
+        }
+    }
 }

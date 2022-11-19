@@ -3,13 +3,16 @@ namespace Modelo;
 use \PDO;
 use DateTime;
 use \Framework\DW3BancoDeDados;
-class Arquivo extends Modelo
+class Foto extends Modelo
 {
-    const BUSCAR_TODOS =  'SELECT a.nome AS a_nome, a.descricao, a.hash_arquivo, a.data_upload, a.id a_id, a.usuario_id, (SELECT COUNT(arquivo_id) FROM curtidas WHERE arquivo_id = a_id AND status_curtida = 1) AS qtd_curtida, u.id u_id, u.nome AS u_nome, u.email FROM arquivos a JOIN usuarios u ON (a.usuario_id = u.id)'; 
+    // const BUSCAR_TODOS =  'SELECT a.nome AS a_nome, a.descricao, a.hash_arquivo, a.data_upload, a.id a_id, a.usuario_id, (SELECT COUNT(arquivo_id) FROM curtidas WHERE arquivo_id = a_id AND status_curtida = 1) AS qtd_curtida, u.id u_id, u.nome AS u_nome, u.email FROM arquivos a JOIN usuarios u ON (a.usuario_id = u.id)'; 
+    // const BUSCAR_TODOS = 'SELECT u.id, u.email, u.senha, u.nome FROM fotos f JOIN usuarios u on (m.usuario_id = u.id) ORDER BY m.id LIMIT ? OFFSET ?;'
+    const BUSCAR_TODOS = 'SELECT u.id as u_id, u.email, f.data_up,f.titulo , f.descricao , f.id as f_id ,u.senha, u.nome as u_nome, f.hash_fotos FROM fotos f JOIN usuarios u on (f.usuario_id = u.id) ORDER BY f.id LIMIT ? OFFSET ?';
+
     const BUSCAR_ID = 'SELECT *, (SELECT COUNT(arquivo_id) FROM curtidas WHERE arquivo_id = id AND status_curtida = 1) AS qtd_curtida  FROM arquivos WHERE id = ? LIMIT 1';
     const DELETAR = 'DELETE FROM arquivos WHERE id = ?';
     const ATUALIZAR_DESCRICAO = 'UPDATE arquivos SET descricao = ? WHERE id = ?';
-    const CONTAR_TODOS = 'SELECT count(id) FROM arquivos';
+    const CONTAR_TODOS = 'SELECT count(id) FROM fotos';
     const INSERIR = 'INSERT INTO fotos(usuario_id, titulo, descricao, data_up, hash_fotos) VALUES (?, ?, ?, ?, ?)';
 
     private $id;
@@ -26,7 +29,7 @@ class Arquivo extends Modelo
         $data_up,
         $pathFoto,
         $usuario = null,
-        $id = null,
+        $id = null
     ) {
         $this->id = $id;
         $this->usuarioId = $usuarioId;
@@ -73,16 +76,16 @@ class Arquivo extends Modelo
         return $this->usuarioId;
     }
 
-    public function salvarFoto()
+    public function salvar()
     {
-        $this->inserirFoto();
+        $this->inserir();
     }
 
-    private function inserirFoto()
+    private function inserir()
     {
         DW3BancoDeDados::getPdo()->beginTransaction();
         $comando = DW3BancoDeDados::prepare(self::INSERIR);
-        $comando->bindValue(1, DW3Sessao::get('usuario'), PDO::PARAM_INT);
+        $comando->bindValue(1, $this->usuarioId, PDO::PARAM_INT);
         $comando->bindValue(2, $this->titulo, PDO::PARAM_STR);
         $comando->bindValue(3, $this->descricao, PDO::PARAM_STR);
         $comando->bindValue(4, $this->data_up, PDO::PARAM_STR);
@@ -106,8 +109,8 @@ class Arquivo extends Modelo
                 $registro['usuario_id'],
                 $registro['nome'],
                 $registro['descricao'],
-                $registro['hash_arquivo'],
-                $registro['data_upload'],
+                $registro['hash_fotos'],
+                $registro['data_up'],
                 null,
                 $registro['id'],
                 $registro['qtd_curtida']
@@ -115,48 +118,7 @@ class Arquivo extends Modelo
         }
         return $objeto;
     }
-    public static function buscarTodos($orderBy = "",$limit = 4, $offset = 0)
-    {   
-        // Verifica orderBy por motivos de segurança
-        $listaBranca = [
-            'qtd_curtida ASC',
-            'qtd_curtida DESC',
-            'a.data_upload ASC',
-            'a.data_upload DESC',
-            'a.id ASC',
-            'a.id DESC',
-            'a_nome ASC',
-            'a_nome DESC'
-        ];
-        $orderBy = in_array($orderBy, $listaBranca) ? $orderBy : "a.id";
-        $buscarTodosCustom = self::BUSCAR_TODOS . 'ORDER BY ' . $orderBy .' LIMIT ? OFFSET ?';
-        $comando = DW3BancoDeDados::prepare($buscarTodosCustom);
-        $comando->bindValue(1, $limit, PDO::PARAM_INT);
-        $comando->bindValue(2, $offset, PDO::PARAM_INT);
-        $comando->execute();
-        $registros = $comando->fetchAll();
-        $objetos = [];
-        foreach ($registros as $registro) {
-            $usuario = new Usuario(
-                $registro['email'],
-                '',
-                $registro['u_nome'],
-                null,
-                $registro['u_id']
-            );
-            $objetos[] = new Arquivo(
-                $registro['u_id'],
-                $registro['a_nome'],
-                $registro['descricao'],
-                $registro['hash_arquivo'],
-                $registro['data_upload'],
-                $usuario,
-                $registro['a_id'],
-                $registro['qtd_curtida']
-            );
-        }
-        return $objetos;
-    }
+
     public static function atualizarDescricao($novaDescricao,$id)
     {
         $comando = DW3BancoDeDados::prepare(self::ATUALIZAR_DESCRICAO);
@@ -164,12 +126,7 @@ class Arquivo extends Modelo
         $comando->bindValue(2, $id, PDO::PARAM_INT);
         $comando->execute();
     } 
-    public static function contarTodos()
-    {
-        $registros = DW3BancoDeDados::query(self::CONTAR_TODOS);
-        $total = $registros->fetch();
-        return intval($total[0]);
-    }
+
     public static function destruir($id)
     {
         $comando = DW3BancoDeDados::prepare(self::DELETAR);
@@ -182,4 +139,42 @@ class Arquivo extends Modelo
             $this->setErroMensagem('texto', 'Mínimo 3 caracteres.');
         }
     }
+
+    public static function contarTodos()
+    {
+        $registros = DW3BancoDeDados::query(self::CONTAR_TODOS);
+        $total = $registros->fetch();
+        return intval($total[0]);
+    }
+
+    public static function buscarTodos($limit = 4, $offset = 0)
+    {
+        $comando = DW3BancoDeDados::prepare(self::BUSCAR_TODOS);
+        $comando->bindValue(1, $limit, PDO::PARAM_INT);
+        $comando->bindValue(2, $offset, PDO::PARAM_INT);
+        $comando->execute();
+        $registros = $comando->fetchAll();
+        $objetos = [];
+        foreach ($registros as $registro) {
+            $usuario = new Usuario(
+                $registro['u_nome'],
+                $registro['email'],
+                '',
+                null,
+                $registro['u_id']
+            );
+      
+            $objetos[] = new Foto(
+                $registro['u_id'],
+                $registro['titulo'],
+                $registro['descricao'],
+                $registro['data_up'],
+                $registro['hash_fotos'],
+                $usuario,
+                $registro['f_id'],
+            );
+        }
+        return $objetos;
+    }
+ 
 }

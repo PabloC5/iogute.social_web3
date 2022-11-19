@@ -12,7 +12,7 @@
         <ul class="nav-list">
             <li class="testeListe">
                 <!-- <a href="home.html">Home</a> -->
-                <a href="<?= URL_RAIZ . 'home/criar' ?>">Home</a>
+                <a href="<?= URL_RAIZ . 'home' ?>">Home</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="dropDPerfil nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,34 +78,25 @@
     </div>
     <!-- modal -->
     <div class="container">
+    <?php if ($mensagemFlash) : ?>
+        <div class="alert alert-warning alert-dismissible pe-2 fade show bg-dark text-light border-light" role="alert">
+            <strong><?= $mensagemFlash ?></strong>
+            <button type="button" class="bg-transparent border-0 float-end d-inline " data-bs-dismiss="alert" aria-label="Close"><i class="fas fa-times text-light"></i></button>
+        </div>
+    <?php endif ?>
     <div class="row">
-        <div class="col-8 offset-2">
+        <div class="col-6 offset-3">
+        <?php foreach ($arquivos as $arquivo) : ?>
             <!-- teste card -->
             <div class="card mb-3 mt-3">
-                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                <img class="card-img-top" src="<?= URL_IMG . 'foto2.jpg' ?>" alt="Card image cap">
+                <img class="card-img-top" src="<?= $arquivo->getfoto() ?>" alt="Card image cap">
                 <div class="card-body">
                         <h5 class="card-title">Card title</h5>
                         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
             </div>
-            <div class="card">
-                <img class="card-img-top" src="<?= URL_IMG . 'foto3.jpg' ?>" alt="Card image cap">
-                <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-            <div class="card mt-3 mb-3">
-                <img class="card-img-top" src="<?= URL_IMG . 'foto1.jpg' ?>" alt="Card image cap">
-                <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
+        <?php endforeach ?>
             <!-- teste card -->
         </div>  
     </div>
