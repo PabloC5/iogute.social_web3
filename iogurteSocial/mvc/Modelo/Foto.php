@@ -6,10 +6,8 @@ use \Framework\DW3BancoDeDados;
 class Foto extends Modelo
 {
     const BUSCAR_TODOS = 'SELECT u.id as u_id, u.email, f.data_up,f.titulo , f.descricao , f.id as f_id ,u.senha, u.nome as u_nome, f.hash_fotos FROM fotos f JOIN usuarios u on (f.usuario_id = u.id) ORDER BY f.id LIMIT ? OFFSET ?';
-
     const BUSCAR_ID = 'SELECT * FROM fotos WHERE id = ? LIMIT 1';
-    const DELETAR = 'DELETE FROM arquivos WHERE id = ?';
-    const ATUALIZAR_DESCRICAO = 'UPDATE arquivos SET descricao = ? WHERE id = ?';
+    const DELETAR = 'DELETE FROM fotos WHERE id = ?';
     const CONTAR_TODOS = 'SELECT count(id) FROM fotos';
     const INSERIR = 'INSERT INTO fotos(usuario_id, titulo, descricao, data_up, hash_fotos) VALUES (?, ?, ?, ?, ?)';
 
@@ -104,20 +102,13 @@ class Foto extends Modelo
         $registro = $comando->fetch();
         if ($registro) {
             $objeto = new Foto(
-                $registro['u_id'],
+                $registro['usuario_id'],
                 $registro['titulo'],
                 $registro['descricao'],
                 $registro['data_up'],
                 $registro['hash_fotos'],
-                $usuario,
-                $registro['f_id'],
-                // $registro['usuario_id'],
-                // $registro['nome'],
-                // $registro['descricao'],
-                // $registro['hash_fotos'],
-                // $registro['data_up'],
-                // null,
-                // $registro['id']
+                null,
+                $registro['id']
             );
             
         }

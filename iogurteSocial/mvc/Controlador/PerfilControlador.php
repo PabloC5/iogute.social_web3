@@ -78,11 +78,12 @@ class PerfilControlador extends Controlador
     {
         $this->verificarLogado();
         $foto = Foto::buscarId($id);
-        var_dump($foto);
+        // var_dump($foto);
         if ($foto->getUsuarioId() == $this->getUsuario()) {
             Foto::destruir($id);
             // DW3Sessao::setFlash('mensagemFlash', 'Foto apagada.');
         } else {
+            echo "errado néee";
             // DW3Sessao::setFlash('mensagemFlash', 'Você não pode deletar as mensagens dos outros.');
         }
         $this->redirecionar(URL_RAIZ . 'perfil');

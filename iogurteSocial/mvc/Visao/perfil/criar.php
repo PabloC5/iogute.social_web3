@@ -18,26 +18,16 @@
               <li class="testeListe">
                 <a href="<?= URL_RAIZ . 'home' ?>">Home</a>
               </li>
-                <li class="nav-item dropdown">
-                  <a class="dropDPerfil nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Perfil
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li>
-                      <a href="<?= URL_RAIZ . '/home/perfil' ?>">Ver meu perfil</a>
-                    </li>
-                    <li>
-                      <form action="<?= URL_RAIZ . 'login' ?>" method="post" class="inline">
-                        <input type="hidden" name="_metodo" value="DELETE">
-                        <a class="dropdown-item" onclick="event.preventDefault(); this.parentNode.submit()">Sair</a>
-                    </form>
-                    </li>
-                  </ul>
-                </li>
-                <button type="button" class="btn btn-outline-light upImageBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  <i class="fa fa-image"></i>
-                  Postar
-                </button>
+              <li class="testeListe">
+                <form action="<?= URL_RAIZ . 'login' ?>" method="post" class="inline">
+                    <input type="hidden" name="_metodo" value="DELETE">
+                    <a class="" onclick="event.preventDefault(); this.parentNode.submit()">Sair</a>
+                </form>
+              </li>
+              <button type="button" class="btn btn-outline-light upImageBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa fa-image"></i>
+                Postar
+              </button>
                 <li>
                   <form>
                     <div class="form-group">
@@ -46,7 +36,7 @@
                     </div>
                   </form>
                 </li>
-              </ul>
+            </ul>
         </nav>
     </header>
     <main>
@@ -58,32 +48,23 @@
         <?php $this->incluirVisao('util/formErro.php', ['campo' => 'perfil']) ?>
         
           <!-- modal excluir -->
-          <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ecluir Postagem?</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                      Deseja realmente excluir essa postagem? Sua fota sera excluída permanentemente
-                  </div>
-                  <div class="modal-footer">
+            <!-- <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Ecluir Postagem?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir essa postagem? Sua fota sera excluída permanentemente
+                </div>
+                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <?php foreach ($arquivos as $arquivo) : ?>
-                  <form action="<?= URL_RAIZ . 'perfil/' . $arquivo->getId() ?>" class="d-inline"   method="post" class="d-inline ">
-                <?php endforeach ?> 
-                  <input type="hidden" name="_metodo" value="DELETE">
-                    <button class="btn btn-outline-danger">
-                        <i class="fa fa-trash"></i>
-                        Excluir
-                    </button>
-                  </form>
-                    <!-- <button type="button" class="btn btn-danger">Excluir</button> -->
-                  </div>
+                  <button type="button" class="btn btn-danger">Excluir</button>
                 </div>
               </div>
             </div>
+          </div> -->
           <!-- modal excluir -->
         
           <!-- modal importar imagem-->
@@ -130,6 +111,34 @@
             <div class="row">
               <?php foreach ($arquivos as $arquivo) : ?>
                 <?php if ($arquivo->getUsuarioId() == $usuario) : ?>
+                  <!-- modal excluir -->
+                  <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ecluir Postagem?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          Deseja realmente excluir essa postagem? Sua fota sera excluída permanentemente
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <!-- <button type="button" class="btn btn-danger">Excluir</button> -->
+                        <!-- <button type="submit" class="btn btn-xs btn-danger" title="Deletar">
+                          Excluir
+                        </button> -->
+                        <form action="<?= URL_RAIZ . 'perfil/' . $arquivo->getId() ?>" method="post" class="d-inline ">
+                          <input type="hidden" name="_metodo" value="DELETE">
+                          <button class="btn btn-outline-danger">
+                              Excluir
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- modal excluir -->
                   <div class="col-6 offset-3">
                       <div class="card-deck">
                           <div class="card mt-3 mb-3">
