@@ -58,8 +58,8 @@ class HomeControlador extends Controlador
                 if (move_uploaded_file($arquivo["tmp_name"], $pathFinal)) {
                     $arquivo = new Foto(
                         DW3Sessao::get('usuario'),
-                        "titulo",
-                        "descritivo",
+                        $_POST['titulo'],
+                        $_POST['descricao'],
                         date("Y-m-d H:i:s"),
                         $pathFinal,
                         null,
@@ -68,7 +68,7 @@ class HomeControlador extends Controlador
                     if ($arquivo->isValido()) {
                         $arquivo->salvar();
                         DW3Sessao::setFlash('mensagemFlash', 'Foto carregada com sucesso');
-                        $this->redirecionar(URL_RAIZ . 'perfil');
+                        $this->redirecionar(URL_RAIZ . 'home');
                     } else {
                         echo "errado";
                     }

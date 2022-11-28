@@ -5,11 +5,9 @@ use DateTime;
 use \Framework\DW3BancoDeDados;
 class Foto extends Modelo
 {
-    // const BUSCAR_TODOS =  'SELECT a.nome AS a_nome, a.descricao, a.hash_arquivo, a.data_upload, a.id a_id, a.usuario_id, (SELECT COUNT(arquivo_id) FROM curtidas WHERE arquivo_id = a_id AND status_curtida = 1) AS qtd_curtida, u.id u_id, u.nome AS u_nome, u.email FROM arquivos a JOIN usuarios u ON (a.usuario_id = u.id)'; 
-    // const BUSCAR_TODOS = 'SELECT u.id, u.email, u.senha, u.nome FROM fotos f JOIN usuarios u on (m.usuario_id = u.id) ORDER BY m.id LIMIT ? OFFSET ?;'
     const BUSCAR_TODOS = 'SELECT u.id as u_id, u.email, f.data_up,f.titulo , f.descricao , f.id as f_id ,u.senha, u.nome as u_nome, f.hash_fotos FROM fotos f JOIN usuarios u on (f.usuario_id = u.id) ORDER BY f.id LIMIT ? OFFSET ?';
 
-    const BUSCAR_ID = 'SELECT *, (SELECT COUNT(arquivo_id) FROM curtidas WHERE arquivo_id = id AND status_curtida = 1) AS qtd_curtida  FROM arquivos WHERE id = ? LIMIT 1';
+    const BUSCAR_ID = 'SELECT * FROM fotos WHERE id = ? LIMIT 1';
     const DELETAR = 'DELETE FROM arquivos WHERE id = ?';
     const ATUALIZAR_DESCRICAO = 'UPDATE arquivos SET descricao = ? WHERE id = ?';
     const CONTAR_TODOS = 'SELECT count(id) FROM fotos';
@@ -60,11 +58,11 @@ class Foto extends Modelo
         return $this->pathFoto;
     }
 
-    // public function getDataFormatada($formato='d-m-Y H:i:s')
-    // {
-    //     $dataFormatada = new DateTime($this->data_upload);
-    //     return $dataFormatada->format($formato);
-    // }
+    public function getDataFormatada($formato='d-m-Y H:i:s')
+    {
+        $dataFormatada = new DateTime($this->data_up);
+        return $dataFormatada->format($formato);
+    }
     
     public function getUsuario()
     {
@@ -105,16 +103,23 @@ class Foto extends Modelo
         $objeto = null;
         $registro = $comando->fetch();
         if ($registro) {
-            $objeto = new Arquivo(
-                $registro['usuario_id'],
-                $registro['nome'],
+            $objeto = new Foto(
+                $registro['u_id'],
+                $registro['titulo'],
                 $registro['descricao'],
-                $registro['hash_fotos'],
                 $registro['data_up'],
-                null,
-                $registro['id'],
-                $registro['qtd_curtida']
+                $registro['hash_fotos'],
+                $usuario,
+                $registro['f_id'],
+                // $registro['usuario_id'],
+                // $registro['nome'],
+                // $registro['descricao'],
+                // $registro['hash_fotos'],
+                // $registro['data_up'],
+                // null,
+                // $registro['id']
             );
+            
         }
         return $objeto;
     }

@@ -11,7 +11,6 @@
         </div>
         <ul class="nav-list">
             <li class="testeListe">
-                <!-- <a href="home.html">Home</a> -->
                 <a href="<?= URL_RAIZ . 'home' ?>">Home</a>
             </li>
             <li class="nav-item dropdown">
@@ -41,12 +40,6 @@
                 <form>
                 <div class="form-group">
                     <input type="text" class="form formPesquisa" id="formGroupExampleInput" placeholder="Pesquisar">
-                    <!-- <select class="form-select" aria-label="Default select example">
-                        <option selected>Users</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select> -->
                     <button type="submit" id="botaoPesquisa" class="btn btn-outline-light btn-sm">Pesquisar</button>
                 </div>
                 </form>
@@ -57,25 +50,36 @@
 <main>
     <!-- modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Postar fotos</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="mb-3">
-            <label for="formFile" class="form-label">Escolha uma imagem para postar</label>
-            <input class="form-control" type="file" id="formFile">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Postar fotos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="<?= URL_RAIZ . 'home' ?>" method="post" enctype="multipart/form-data">
+                  <div class="mb-3">
+                    <label for="formFile" class="form-label">Escolha uma imagem para postar</label>
+                      <input class="form-control" name="file" type="file" id="formFile">
+                  </div>
+                  <div class="form-group">
+                    <label for="recipient-name" class="col-form-label">Titulo da sua foto:</label>
+                    <input type="text" class="form-control" name="titulo" id="recipient-name">
+                  </div>
+                  <div class="form-group">
+                    <label for="message-text" class="col-form-label">Descrição:</label>
+                    <textarea class="form-control" name="descricao" id="message-text"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <input type="submit" name="acao" value="Save" class="btn btn-primary">
+                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
-    </div>
-    </div>
     <!-- modal -->
     <div class="container">
     <?php if ($mensagemFlash) : ?>
@@ -91,14 +95,22 @@
             <div class="card mb-3 mt-3">
                 <img class="card-img-top" src="<?= $arquivo->getfoto() ?>" alt="Card image cap">
                 <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <h5 class="card-title"><?= $arquivo->getTitulo() ?></h5>
+                        <p class="card-text"><?= $arquivo->getDescricao() ?></p>
+                        <p class="card-text"><small class="text-muted"><?= $arquivo->getDataFormatada() ?></small></p>
                 </div>
             </div>
         <?php endforeach ?>
             <!-- teste card -->
         </div>  
+        <div class="col-6 offset-3 mb-2">
+                <?php if ($pagina > 1) : ?>
+                    <a href="<?= URL_RAIZ . 'home?p=' . ($pagina-1) ?>" class="btn btn-primary">Página anterior</a>
+                <?php endif ?>
+                <?php if ($pagina < $ultimaPagina) : ?>
+                    <a href="<?= URL_RAIZ . 'home?p=' . ($pagina+1) ?>" class="btn btn-primary">Próxima página</a>
+                <?php endif ?>
+              </div>
     </div>
     </div>
 </main>

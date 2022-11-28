@@ -38,9 +38,9 @@ class PerfilControlador extends Controlador
     public function armazenar()
     {
         $this->verificarLogado();
-        
         if (isset($_POST['acao'])) {
             $arquivo = $_FILES['file'];
+            // var_dump($arquivo);
             $pasta = 'publico/img/';
             $nomeDoarquivo = $arquivo['name'];
             $novoNomeArquivo = uniqid();
@@ -52,17 +52,19 @@ class PerfilControlador extends Controlador
                 if (move_uploaded_file($arquivo["tmp_name"], $pathFinal)) {
                     $arquivo = new Foto(
                         DW3Sessao::get('usuario'),
-                        "titulo",
-                        "descritivo",
+                        $_POST['titulo'],
+                        $_POST['descricao'],
                         date("Y-m-d H:i:s"),
                         $pathFinal,
                         null,
                         null
                     );
+                    
                     if ($arquivo->isValido()) {
                         $arquivo->salvar();
                         DW3Sessao::setFlash('mensagemFlash', 'Foto carregada com sucesso');
                         $this->redirecionar(URL_RAIZ . 'perfil');
+                        
                     } else {
                         echo "errado";
                     }
@@ -70,6 +72,20 @@ class PerfilControlador extends Controlador
                 } 
             }
         }
+    }
+
+    public function destruir($id)
+    {
+        $this->verificarLogado();
+        $foto = Foto::buscarId($id);
+        var_dump($foto);
+        if ($foto->getUsuarioId() == $this->getUsuario()) {
+            Foto::destruir($id);
+            // DW3Sessao::setFlash('mensagemFlash', 'Foto apagada.');
+        } else {
+            // DW3Sessao::setFlash('mensagemFlash', 'Você não pode deletar as mensagens dos outros.');
+        }
+        $this->redirecionar(URL_RAIZ . 'perfil');
     }
    
 }
