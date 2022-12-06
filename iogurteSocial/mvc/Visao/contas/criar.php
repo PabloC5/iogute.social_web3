@@ -1,4 +1,4 @@
-    <header>
+<header>
         <nav>
             <a class="nomeUser" href="perfil.html">
                 <i class="fa fa-user"></i>
@@ -44,7 +44,7 @@
                       <?php endif ?>  
                     <!-- <div class="col-6"> -->
                     <?php if ($buscaUsuarios != null) : ?>
-                      <form action="<?= URL_RAIZ . 'perfil/usuarios' ?>" method="get">
+                      <form action="<?= URL_RAIZ . 'perfil' ?>" method="get">
                       <div class="form-group row">
                         <div class="col-8">
                           <select name="selectNomes" class="form-select" aria-label="Default select example">

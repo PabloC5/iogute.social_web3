@@ -25,12 +25,42 @@ class PerfilControlador extends Controlador
         $this->verificarLogado();
         $this->nomeUsuario = Usuario::buscarId(DW3Sessao::get('usuario'));
         $this->usuarioTeste = DW3Sessao::get('usuario');
+        $usuarioBuscado = null;
+        $usuarioExterno = false;
+        if (isset($_GET["buscando"])) {
+            $usuarioBuscado = Usuario::buscarNome($_GET["buscando"]);
+        }
         $paginacao = $this->calcularPaginacao();
         $this->visao('perfil/criar.php', [
             'usuario' => $this->getUsuario(),
             'pagina' => $paginacao['pagina'],
             'arquivos' => $paginacao['arquivos'],
+            'buscaUsuarios' => $usuarioBuscado,
             'ultimaPagina' => $paginacao['ultimaPagina'],
+            'mensagemFlash' => DW3Sessao::getFlash('mensagemFlash')
+        ], 'perfil.php');
+    }
+
+    public function perfilUsers()
+    {
+        $this->verificarLogado();
+        $this->nomeUsuario = Usuario::buscarId(DW3Sessao::get('usuario'));
+        $this->usuarioTeste = DW3Sessao::get('usuario');
+        $usuarioBuscadoSelec = null;
+        $usuarioExterno = true;
+        // if (isset($_GET["buscando"])) {
+        $usuarioBuscadoSelec = null;
+        $usuarioBuscadoSelec = Usuario::buscarNomeSelect($_GET["selectNomes"]);
+        // }
+        var_dump($usuarioBuscadoSelec);
+        $paginacao = $this->calcularPaginacao();
+        $this->visao('contas/criar.php', [
+            'usuario' => $this->getUsuario(),
+            'pagina' => $paginacao['pagina'],
+            'arquivos' => $paginacao['arquivos'],
+            'buscaUsuarios' => $usuarioBuscadoSelec,
+            'ultimaPagina' => $paginacao['ultimaPagina'],
+            'usuarioExterno' => $usuarioExterno,
             'mensagemFlash' => DW3Sessao::getFlash('mensagemFlash')
         ], 'perfil.php');
     }

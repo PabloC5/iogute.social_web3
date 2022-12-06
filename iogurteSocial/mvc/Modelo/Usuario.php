@@ -11,6 +11,7 @@ class Usuario extends Modelo
     const BUSCAR_ID = 'SELECT * FROM usuarios WHERE id = ?';
     const BUSCAR_NOME = 'SELECT * FROM usuarios WHERE nome = ?';
     const BUSCAR_POR_EMAIL = 'SELECT * FROM usuarios WHERE email = ? LIMIT 1';
+    // const BUSCAR_POR_NOME = "SELECT * FROM usuarios WHERE nome LIKE ?";
     const INSERIR = 'INSERT INTO usuarios(email,senha, nome) VALUES (?, ?, ?)';
     private $id;
     private $nome;
@@ -120,6 +121,54 @@ class Usuario extends Modelo
                 $registro['email'],
                 '',
                 $registro['nome'],
+                null,
+                $registro['id']
+            );
+            $objeto->senha = $registro['senha'];
+        }
+        return $objeto;
+    }
+
+    public static function buscarNome($nome)
+    {
+        $paramLike = "'%" . $nome . "%'";
+        // var_dump($paramLike);
+        // $comando = DW3BancoDeDados::prepare(self::BUSCAR_POR_NOME);
+        // $comando->bindValue(1, $paramLike , PDO::PARAM_STR);
+        $comando = DW3BancoDeDados::prepare("SELECT * FROM usuarios WHERE nome LIKE  $paramLike");
+        $comando->execute();
+        $objetos = [];
+        $registros = $comando->fetchAll();
+        // var_dump($registros);
+        foreach ($registros as $registro) {
+            if ($registro) {
+                $objetos[] = new Usuario(
+                    $registro['nome'],
+                    $registro['email'],
+                    '',
+                    null,
+                    $registro['id']
+                );
+                // $objeto->senha = $registro['senha'];
+            }
+        }
+        return $objetos;
+    }
+
+    public static function buscarNomeSelect($nome)
+    {
+        // $comando = DW3BancoDeDados::prepare("SELECT * FROM usuarios WHERE nome = 'pablito'");
+        $comando = DW3BancoDeDados::prepare(self::BUSCAR_NOME);
+        $comando->bindValue(1, trim($nome), PDO::PARAM_STR);
+        $comando->execute();
+        var_dump($nome);
+        $objeto = null;
+        $registro = $comando->fetch();
+        if ($registro) {
+            $objeto = new Usuario(
+                $registro['nome'],
+                $registro['email'],
+                '',
                 null,
                 $registro['id']
             );

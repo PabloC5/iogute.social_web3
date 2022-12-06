@@ -35,4 +35,7 @@ $rotas = [
     '/perfil/?' => [
         'DELETE' => '\Controlador\PerfilControlador#destruir',
     ],
+    '/perfil/usuarios' => [
+        'GET' => '\Controlador\PerfilControlador#perfilUsers',
+    ],
 ];

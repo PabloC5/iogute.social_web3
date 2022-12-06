@@ -15,7 +15,7 @@ CREATE table fotos (
 	titulo VARCHAR (50) NOT NULL,
 	descricao VARCHAR (255) NOT NULL,
     data_up DATETIME NOT NULL,
-    imagem longblob NOT NULL,
+    hash_fotos varchar(255) COLLATE utf8mb3_unicode_ci NOT NULL,
 	PRIMARY KEY (id),
     FOREIGN KEY (usuario_id) REFERENCES usuarios (id)
 )
