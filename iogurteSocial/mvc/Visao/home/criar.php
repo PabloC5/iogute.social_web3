@@ -37,12 +37,47 @@
                 Postar
             </button>
             <li>
-                <form>
+                <!-- fazer os ajustes -->
+                <div class="row px-0">
+                      <?php if ($buscaUsuarios == null) : ?>
+                        <div class="col-12">
+                          <form action="<?= URL_RAIZ . 'home' ?>" method="get">
+                            <div class="form-group">
+                              <input type="text" class="form formPesquisa" name="buscando" id="formGroupExampleInput" placeholder="Pesquisar">
+                              <input type="submit" name="acao" value="Pesquisar" class="btn btn-primary">
+                              <!-- <button type="submit" name="acao" id="botaoPesquisa" class="btn btn-outline-light btn-sm">Pesquisar</button> -->
+                            </div>
+                          </form>
+                        </div>
+                      <?php endif ?>  
+                    <!-- <div class="col-6"> -->
+                    <?php if ($buscaUsuarios != null) : ?>
+                      <form action="<?= URL_RAIZ . 'perfil/usuarios' ?>" method="get">
+                      <div class="form-group row">
+                        <div class="col-8">
+                          <select name="selectNomes" class="form-select" aria-label="Default select example">
+                            <?php foreach ($buscaUsuarios as $buscaUsuario) : ?>
+                              <option value=" <?= $buscaUsuario->getNome() ?>"><?= $buscaUsuario->getNome() ?></option>                                                    
+                            <?php endforeach ?> 
+                          </select>
+                        </div>
+                        <div class="col-4">
+                          <input type="submit" name="acao" value="acessar" class="btn btn-primary">
+                        </div>
+                        
+                      </div>
+                    </form>
+                    <!-- <input type="submit" name="acao" value="limpar" class="btn btn-danger"> -->
+                      <?php endif ?>  
+                    <!-- </div> -->
+                  </div>
+                <!-- <form>
                 <div class="form-group">
                     <input type="text" class="form formPesquisa" id="formGroupExampleInput" placeholder="Pesquisar">
                     <button type="submit" id="botaoPesquisa" class="btn btn-outline-light btn-sm">Pesquisar</button>
                 </div>
-                </form>
+                </form> -->
+                <!-- fazer os ajustes -->
             </li>
             </ul>
     </nav>

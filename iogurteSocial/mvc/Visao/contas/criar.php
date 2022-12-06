@@ -3,11 +3,7 @@
             <a class="nomeUser" href="perfil.html">
                 <i class="fa fa-user"></i>
                 <!-- Pablo Correia -->
-                <?= $this->nomeUsuario->getNome() ?>
-                <!-- teste nome logado -->
-                
-                <!-- teste nome logado -->
-                <!-- <img src="img/logo-branco.png" alt="logo"> -->
+                <?= $buscaUsuarios->getNome() ?>
             </a>
              <div class="mobile-menu">
                 <div class="line1"></div>
@@ -24,25 +20,23 @@
                     <a class="" onclick="event.preventDefault(); this.parentNode.submit()">Sair</a>
                 </form>
               </li>
-              <button type="button" class="btn btn-outline-light upImageBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <!-- <button type="button" class="btn btn-outline-light upImageBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <i class="fa fa-image"></i>
                 Postar
-              </button>
+              </button> -->
                 <li>
                 
-                  <div class="row px-0">
+                  <!-- <div class="row px-0">
                       <?php if ($buscaUsuarios == null) : ?>
                         <div class="col-12">
                           <form action="<?= URL_RAIZ . 'perfil' ?>" method="get">
                             <div class="form-group">
                               <input type="text" class="form formPesquisa" name="buscando" id="formGroupExampleInput" placeholder="Pesquisar">
                               <input type="submit" name="acao" value="Pesquisar" class="btn btn-primary">
-                              <!-- <button type="submit" name="acao" id="botaoPesquisa" class="btn btn-outline-light btn-sm">Pesquisar</button> -->
                             </div>
                           </form>
                         </div>
                       <?php endif ?>  
-                    <!-- <div class="col-6"> -->
                     <?php if ($buscaUsuarios != null) : ?>
                       <form action="<?= URL_RAIZ . 'perfil' ?>" method="get">
                       <div class="form-group row">
@@ -60,10 +54,8 @@
                       </div>
                       
                     </form>
-                    <!-- <input type="submit" name="acao" value="limpar" class="btn btn-danger"> -->
                       <?php endif ?>  
-                    <!-- </div> -->
-                  </div>
+                  </div> -->
                   
                 </li>
                

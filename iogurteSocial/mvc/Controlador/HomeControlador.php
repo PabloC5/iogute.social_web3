@@ -11,6 +11,11 @@ class HomeControlador extends Controlador
     public function index()
     {
         $this->verificarLogado();
+        $usuarioBuscado = null;
+        $usuarioExterno = false;
+        if (isset($_GET["buscando"])) {
+            $usuarioBuscado = Usuario::buscarNome($_GET["buscando"]);
+        }
         // $this->nomeUsuario = Usuario::buscarId(DW3Sessao::get('usuario'));
         $paginacao = $this->calcularPaginacao();
         $this->verificarLogado();
@@ -18,6 +23,7 @@ class HomeControlador extends Controlador
             'usuario' => $this->getUsuario(),
             'pagina' => $paginacao['pagina'],
             'arquivos' => $paginacao['arquivos'],
+            'buscaUsuarios' => $usuarioBuscado,
             'ultimaPagina' => $paginacao['ultimaPagina'],
             'mensagemFlash' => DW3Sessao::getFlash('mensagemFlash')
         ], 'home.php');
