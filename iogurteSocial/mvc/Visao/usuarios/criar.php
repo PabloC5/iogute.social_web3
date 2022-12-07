@@ -1,6 +1,5 @@
 <div class="container-login">
     <div class="logo-img">
-        <!-- <img src="/front-web3/src/img/logo.png" alt="logo"> -->
         <img src="<?= URL_IMG . 'logo.png' ?>" alt="logo">
     </div>
     <div class="formulario-login">
@@ -36,13 +35,11 @@
 
             <div class="input-login testeBotao">
                 <button type="submit" class="botaoEntrar btn btn-primary center-block">Cadastrar-se</button>
-                <!-- <a class="botaoEntrar btn btn-primary" href="home.html">Criar</a> -->
             </div>
 
             <div class="divider">ou</div>
             <div class="sigin">
                 <a href="<?= URL_RAIZ . 'login' ?>">Ja tenho uma conta!</a>
-                <!-- <a href="login.html">Ja tenho uma conta!</a> -->
             </div>
         </form>
     </div>

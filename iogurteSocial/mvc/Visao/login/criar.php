@@ -26,7 +26,6 @@
             <div class="divider">ou</div>
             <div class="sigup">
                 <a href="<?= URL_RAIZ . 'usuarios/criar' ?>">Criar uma conta agora!</a>
-                <!-- <a href="cadastro.html">Criar uma conta agora!</a> -->
             </div>
         </form>
     </div>

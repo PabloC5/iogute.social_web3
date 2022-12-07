@@ -2,7 +2,6 @@
     <nav>
         <a class="logo" href="">
             <img src="<?= URL_IMG . 'logo-branco.png' ?>" alt="logo">
-            <!-- <img src="img/logo-branco.png" alt="logo"> -->
         </a>
             <div class="mobile-menu">
             <div class="line1"></div>
@@ -66,18 +65,13 @@
                         
                       </div>
                     </form>
-                    <!-- <input type="submit" name="acao" value="limpar" class="btn btn-danger"> -->
                       <?php endif ?>  
-                    <!-- </div> -->
                   </div>
             </li>
             </ul>
     </nav>
 </header>
 <main>
-<!-- <img class="card-img-top " src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2018%2F07%2F31%2F22%2F08%2Flion-3576045__480.jpg&imgrefurl=https%3A%2F%2Fpixabay.com%2Fpt%2Fimages%2Fsearch%2Fle%25C3%25A3o%2F&tbnid=YZxSE3QW-Me-XM&vet=12ahUKEwj8lN34jeb7AhV1DdQKHQgCAtYQMygBegUIARDkAQ..i&docid=hf4oFJjOxKnwjM&w=758&h=480&q=imagens&ved=2ahUKEwj8lN34jeb7AhV1DdQKHQgCAtYQMygBegUIARDkAQ" alt="Card image cap"> -->
-
-    <!-- modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -101,7 +95,6 @@
                   </div>
                   <div class="modal-footer">
                     <input type="submit" name="acao" value="Save" class="btn btn-primary">
-                    <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                   </div>
                 </form>

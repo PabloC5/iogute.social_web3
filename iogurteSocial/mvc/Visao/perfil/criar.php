@@ -2,12 +2,7 @@
         <nav>
             <a class="nomeUser" href="<?= URL_RAIZ . 'home' ?>">
                 <i class="fa fa-user"></i>
-                <!-- Pablo Correia -->
                 <?= $this->nomeUsuario->getNome() ?>
-                <!-- teste nome logado -->
-                
-                <!-- teste nome logado -->
-                <!-- <img src="img/logo-branco.png" alt="logo"> -->
             </a>
              <div class="mobile-menu">
                 <div class="line1"></div>
@@ -37,12 +32,10 @@
                             <div class="form-group">
                               <input type="text" class="form formPesquisa" name="buscando" id="formGroupExampleInput" placeholder="Pesquisar">
                               <input type="submit" name="acao" value="Pesquisar" class="btn btn-primary">
-                              <!-- <button type="submit" name="acao" id="botaoPesquisa" class="btn btn-outline-light btn-sm">Pesquisar</button> -->
                             </div>
                           </form>
                         </div>
                       <?php endif ?>  
-                    <!-- <div class="col-6"> -->
                     <?php if ($buscaUsuarios != null) : ?>
                       <form action="<?= URL_RAIZ . 'perfil/usuarios' ?>" method="get">
                       <div class="form-group row">
@@ -60,9 +53,7 @@
                       </div>
                       
                     </form>
-                    <!-- <input type="submit" name="acao" value="limpar" class="btn btn-danger"> -->
                       <?php endif ?>  
-                    <!-- </div> -->
                   </div>
                   
                 </li>
@@ -135,10 +126,6 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <!-- <button type="button" class="btn btn-danger">Excluir</button> -->
-                        <!-- <button type="submit" class="btn btn-xs btn-danger" title="Deletar">
-                          Excluir
-                        </button> -->
                         <form action="<?= URL_RAIZ . 'perfil/' . $arquivo->getId() ?>" method="post" class="d-inline ">
                           <input type="hidden" name="_metodo" value="DELETE">
                           <button class="btn btn-outline-danger">
@@ -192,4 +179,3 @@
           </p>
         </div>
     </footer>
-    <!-- <script src="js/navbar.js"></script> -->
