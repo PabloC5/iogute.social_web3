@@ -11,7 +11,7 @@ class Teste extends DW3Teste
 
 	public function logar()
 	{
-		$this->usuario = new Usuario('usuario@teste.com', '123');
+		$this->usuario = new Usuario('nome-teste','joao@teste.com', 'senha');
 		$this->usuario->salvar();
 		DW3Sessao::set('usuario', $this->usuario->getId());
 	}
