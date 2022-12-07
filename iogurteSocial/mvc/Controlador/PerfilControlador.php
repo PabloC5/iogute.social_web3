@@ -44,23 +44,13 @@ class PerfilControlador extends Controlador
     public function perfilUsers()
     {
         $this->verificarLogado();
-        $this->nomeUsuario = Usuario::buscarId(DW3Sessao::get('usuario'));
-        $this->usuarioTeste = DW3Sessao::get('usuario');
-        $usuarioBuscadoSelec = null;
-        $usuarioExterno = true;
-        // if (isset($_GET["buscando"])) {
-        $usuarioBuscadoSelec = null;
         $usuarioBuscadoSelec = Usuario::buscarNomeSelect($_GET["selectNomes"]);
-        // }
-        var_dump($usuarioBuscadoSelec);
         $paginacao = $this->calcularPaginacao();
         $this->visao('contas/criar.php', [
-            'usuario' => $this->getUsuario(),
             'pagina' => $paginacao['pagina'],
             'arquivos' => $paginacao['arquivos'],
             'buscaUsuarios' => $usuarioBuscadoSelec,
             'ultimaPagina' => $paginacao['ultimaPagina'],
-            'usuarioExterno' => $usuarioExterno,
             'mensagemFlash' => DW3Sessao::getFlash('mensagemFlash')
         ], 'perfil.php');
     }
@@ -90,14 +80,14 @@ class PerfilControlador extends Controlador
                         null
                     );
                     
-                    if ($arquivo->isValido()) {
+                    // if ($arquivo->isValido()) {
                         $arquivo->salvar();
                         DW3Sessao::setFlash('mensagemFlash', 'Foto carregada com sucesso');
                         $this->redirecionar(URL_RAIZ . 'perfil');
                         
-                    } else {
-                        echo "errado";
-                    }
+                    // } else {
+                    //     echo "errado";
+                    // }
                     
                 } 
             }
@@ -108,12 +98,11 @@ class PerfilControlador extends Controlador
     {
         $this->verificarLogado();
         $foto = Foto::buscarId($id);
-        // var_dump($foto);
         if ($foto->getUsuarioId() == $this->getUsuario()) {
             Foto::destruir($id);
             // DW3Sessao::setFlash('mensagemFlash', 'Foto apagada.');
         } else {
-            echo "errado néee";
+            echo "errado";
             // DW3Sessao::setFlash('mensagemFlash', 'Você não pode deletar as mensagens dos outros.');
         }
         $this->redirecionar(URL_RAIZ . 'perfil');

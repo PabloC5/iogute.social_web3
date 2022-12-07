@@ -28,10 +28,4 @@ class UsuarioControlador extends Controlador
     {
         $this->visao('usuarios/sucesso.php');
     }
-
-    // public function buscar()
-    // {
-    //     $usuarioBuscado = Usuario::buscarNome($_GET["buscando"]);
-        
-    // }
 }

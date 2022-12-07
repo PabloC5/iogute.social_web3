@@ -1,8 +1,7 @@
 <header>
         <nav>
-            <a class="nomeUser" href="perfil.html">
+            <a class="nomeUser" href="<?= URL_RAIZ . 'home' ?>">
                 <i class="fa fa-user"></i>
-                <!-- Pablo Correia -->
                 <?= $buscaUsuarios->getNome() ?>
             </a>
              <div class="mobile-menu">
@@ -20,49 +19,11 @@
                     <a class="" onclick="event.preventDefault(); this.parentNode.submit()">Sair</a>
                 </form>
               </li>
-              <!-- <button type="button" class="btn btn-outline-light upImageBtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fa fa-image"></i>
-                Postar
-              </button> -->
-                <li>
-                
-                  <!-- <div class="row px-0">
-                      <?php if ($buscaUsuarios == null) : ?>
-                        <div class="col-12">
-                          <form action="<?= URL_RAIZ . 'perfil' ?>" method="get">
-                            <div class="form-group">
-                              <input type="text" class="form formPesquisa" name="buscando" id="formGroupExampleInput" placeholder="Pesquisar">
-                              <input type="submit" name="acao" value="Pesquisar" class="btn btn-primary">
-                            </div>
-                          </form>
-                        </div>
-                      <?php endif ?>  
-                    <?php if ($buscaUsuarios != null) : ?>
-                      <form action="<?= URL_RAIZ . 'perfil' ?>" method="get">
-                      <div class="form-group row">
-                        <div class="col-8">
-                          <select name="selectNomes" class="form-select" aria-label="Default select example">
-                            <?php foreach ($buscaUsuarios as $buscaUsuario) : ?>
-                              <option value=" <?= $buscaUsuario->getNome() ?>"><?= $buscaUsuario->getNome() ?></option>                                                    
-                            <?php endforeach ?> 
-                          </select>
-                        </div>
-                        <div class="col-4">
-                          <input type="submit" name="acao" value="acessar" class="btn btn-primary">
-                        </div>
-                        
-                      </div>
-                      
-                    </form>
-                      <?php endif ?>  
-                  </div> -->
-                  
-                </li>
-               
             </ul>
         </nav>
     </header>
     <main>
+
       <!-- testando algumas coisas -->
     <div>
     
@@ -113,7 +74,7 @@
           <!-- começa -->
             <div class="row">
               <?php foreach ($arquivos as $arquivo) : ?>
-                <?php if ($arquivo->getUsuarioId() == $usuario) : ?>
+                <?php if ($arquivo->getUsuarioId() == $buscaUsuarios->getId()) : ?>
                   <!-- modal excluir -->
                   <div class="modal fade" id="modalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
@@ -145,17 +106,13 @@
                   <div class="col-6 offset-3">
                       <div class="card-deck">
                           <div class="card mt-3 mb-3">
-                              <img class="card-img-top " src="<?= $arquivo->getfoto() ?>" alt="Card image cap">
+                              <img class="card-img-top" src="<?= $arquivo->getfoto() ?>" alt="Card image cap">
                               <div class="card-body">
                                 <h5 class="card-title"><?= $arquivo->getTitulo() ?></h5>
                                 <p class="card-text"><?= $arquivo->getDescricao() ?></p>
                                 <p class="card-text"><small class="text-muted"><?= $arquivo->getDataFormatada() ?></small></p>
                                 <hr>
                                 <p>
-                                <button  class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalDelete">
-                                  <i class="fa fa-trash"></i>
-                                  Excluir
-                                </button>
                               </div>
                           </div>
                       </div>

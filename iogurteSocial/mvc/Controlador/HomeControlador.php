@@ -71,13 +71,13 @@ class HomeControlador extends Controlador
                         null,
                         null
                     );
-                    if ($arquivo->isValido()) {
+                    // if ($arquivo->isValido()) {
                         $arquivo->salvar();
                         DW3Sessao::setFlash('mensagemFlash', 'Foto carregada com sucesso');
                         $this->redirecionar(URL_RAIZ . 'home');
-                    } else {
-                        echo "errado";
-                    }
+                    // } else {
+                    //     echo "errado";
+                    // }
                     
                 } 
             }

@@ -16,7 +16,6 @@ class LoginControlador extends Controlador
         $usuario = Usuario::buscarEmail($_POST['email']);
         if ($usuario && $usuario->verificarSenha($_POST['senha'])) {
             DW3Sessao::set('usuario', $usuario->getId());
-            // DW3Sessao::set('usuario', $usuario->getNome());
             $this->redirecionar(URL_RAIZ . 'home');
         } else {
             $this->setErros(['login' => 'Usuário ou senha inválido.']);

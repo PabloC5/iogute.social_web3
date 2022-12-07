@@ -1,6 +1,6 @@
     <header>
         <nav>
-            <a class="nomeUser" href="perfil.html">
+            <a class="nomeUser" href="<?= URL_RAIZ . 'home' ?>">
                 <i class="fa fa-user"></i>
                 <!-- Pablo Correia -->
                 <?= $this->nomeUsuario->getNome() ?>
